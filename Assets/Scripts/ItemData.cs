@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Inventory
+namespace Game.Inventory
 {
     [CreateAssetMenu]
     public class ItemData : ScriptableObject
@@ -10,8 +10,7 @@ namespace Inventory
         public new string name;
         public int width = 1;
         public int height = 1;
-        public int x;
-        public int y;
+
         public Sprite itemIcon;
     }
 }
