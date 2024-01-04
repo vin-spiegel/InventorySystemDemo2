@@ -449,7 +449,6 @@ GameObject:
   - component: {fileID: 801417766}
   - component: {fileID: 801417765}
   - component: {fileID: 801417769}
-  - component: {fileID: 801417770}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -556,19 +555,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 400f490fe50d65648bf5fc5e13678c07, type: 2}
   - {fileID: 11400000, guid: e91a5b447797c4e4e8bfe0c0eafbb42d, type: 2}
   itemPrefab: {fileID: 2731765366626152833, guid: 37a69eddd2ab2174b85a2204e2731ae5, type: 3}
-  highlighter: {fileID: 37417578}
---- !u!114 &801417770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 801417764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61bd55db4aa4457987e8492042c4a121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   highlighter: {fileID: 37417578}
 --- !u!1 &963194225
 GameObject:

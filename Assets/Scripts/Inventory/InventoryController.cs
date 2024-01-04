@@ -133,7 +133,11 @@ namespace Inventory
 
         private void LeftMouseButtonPressed()
         {
-            var pos = GetTileGridPosition().Value;
+            var vec = GetTileGridPosition();
+            if (vec == null)
+                return;
+            
+            var pos = vec.Value;
 
             if (!_selectedItem)
             {
@@ -161,6 +165,9 @@ namespace Inventory
 
         private Vector2Int? GetTileGridPosition()
         {
+            if (!_selectedItemGrid)
+                return null;
+            
             var position = Input.mousePosition;
 
             if (_selectedItem)
@@ -169,7 +176,17 @@ namespace Inventory
                 position.y += (_selectedItem.Height - 1) * GameConfig.TileSize / 2.0f;
             }
 
-            return _selectedItemGrid ? _selectedItemGrid.GetTileGridPosition(position, _scaleFactor) : (Vector2Int?)null;
+            return GetTileGridPosition(position);
+        }
+
+        private Vector2Int GetTileGridPosition(Vector2 mousePosition)
+        {
+            var position = _selectedItemGrid.transform.position;
+
+            return new Vector2Int(
+                (int)((mousePosition.x - position.x) / (GameConfig.TileSize * _scaleFactor)),
+                (int)((position.y - mousePosition.y) / (GameConfig.TileSize * _scaleFactor))
+            );
         }
     }
 }

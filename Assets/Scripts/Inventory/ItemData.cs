@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+// ReSharper disable InconsistentNaming
 
 namespace Inventory
 {
@@ -12,5 +13,6 @@ namespace Inventory
         public int height = 1;
 
         public Sprite itemIcon;
+        public int[,] shape;
     }
 }

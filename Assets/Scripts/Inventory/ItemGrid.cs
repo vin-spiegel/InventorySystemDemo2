@@ -11,24 +11,12 @@ namespace Inventory
     {
         [SerializeField] private int width, height;
     
-        // private InventoryItem[,] _inventoryItemSlot;
         private InventoryContainer _inventoryContainer;
 
         private void Start()
         {
-            // _inventoryItemSlot = new InventoryItem[width, height];
             _inventoryContainer = new InventoryContainer(width, height, this.name);
             ((RectTransform)transform).sizeDelta = new Vector2(width, height) * GameConfig.TileSize;    
-        }
-
-        public Vector2Int GetTileGridPosition(Vector2 mousePosition, float scaleFactor = 1f)
-        {
-            var position = transform.position;
-
-            return new Vector2Int(
-                (int)((mousePosition.x - position.x) / (GameConfig.TileSize * scaleFactor)),
-                (int)((position.y - mousePosition.y) / (GameConfig.TileSize * scaleFactor))
-            );
         }
 
         public bool PlaceItem(InventoryItem inventoryItem, int posX, int posY, ref InventoryItem overlapItem)
