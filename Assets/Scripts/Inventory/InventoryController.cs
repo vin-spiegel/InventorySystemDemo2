@@ -95,6 +95,7 @@ namespace Inventory
             _selectedItem = item;
         }
 
+        // todo: ItemSpawner로 만들 것
         private InventoryItem CreateItem()
         {
             var item = Instantiate(itemPrefab).GetComponent<InventoryItem>();

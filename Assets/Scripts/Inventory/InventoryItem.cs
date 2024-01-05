@@ -32,7 +32,6 @@ namespace Inventory
 
         public bool rotated;
     
-        // TODO: 스크립터블 오브젝트로 세팅
         public void Initialize(ItemData item)
         {
             itemData = item;

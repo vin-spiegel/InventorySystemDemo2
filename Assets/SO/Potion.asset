@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b181b03bc5443a845ccfb5f1dde605, type: 3}
   m_Name: Potion
   m_EditorClassIdentifier: 
+  dataId: 533561e3-cef4-49d2-8c87-543f5c257310
   name: Potion
+  description: "5\uCD08\uB9C8\uB2E4 1\uC529 \uCCB4\uB825\uC744 \uD68C\uBCF5\uD55C\uB2E4."
   width: 1
   height: 2
   itemIcon: {fileID: 21300000, guid: 7ee8d42495f5f4944b4da54d0d07d4c1, type: 3}
+  shapeJson: '[[0,2,0],[2,1,2],[2,1,2],[0,2,0]]'
