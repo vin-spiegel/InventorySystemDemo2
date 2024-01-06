@@ -1,12 +1,33 @@
 using Game.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
+// ReSharper disable UnassignedField.Global
 
 namespace Inventory
 {
+    public class InventoryItemDataProxy
+    {
+        private readonly ItemData _data;
+
+        internal bool Rotated { get; set; }
+        internal int Height => !Rotated ? _data.height : _data.width;
+        internal int Width => !Rotated ? _data.height : _data.width;
+        internal int X { get; set; }
+        internal int Y { get; set; }
+        internal int[,] Shape => _data.shape;
+
+        public InventoryItemDataProxy(ItemData data)
+        {
+            _data = data;
+        }
+    }
+
     public class InventoryItem : MonoBehaviour
     {
         public ItemData itemData;
+
+        public int[,] Shape => itemData.shape;
+        
         public int Height
         {
             get
@@ -36,7 +57,7 @@ namespace Inventory
         {
             itemData = item;
 
-            GetComponent<Image>().sprite = item.itemIcon;
+            GetComponent<Image>().sprite = item.sprite;
 
             var rect = transform as RectTransform;
             if (rect)

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Game.Inventory;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 // ReSharper disable Unity.InefficientPropertyAccess
 
@@ -37,7 +38,7 @@ namespace Inventory
     
         [SerializeField] private List<ItemData> items = new();
         [SerializeField] private GameObject itemPrefab;
-        [SerializeField] private RectTransform highlighter;
+        [SerializeField] private GameObject highlightPrefab;
 
         private HighlightHandler _highlightHandler;
 
@@ -45,7 +46,7 @@ namespace Inventory
         {
             var canvas = GetComponent<Canvas>();
             _scaleFactor = canvas.scaleFactor;
-            _highlightHandler = new HighlightHandler(highlighter);
+            _highlightHandler = new HighlightHandler(highlightPrefab);
         }
     
         private void Update()

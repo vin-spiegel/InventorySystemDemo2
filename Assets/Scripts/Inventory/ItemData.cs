@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable ParameterHidesMember
 
@@ -17,7 +19,7 @@ namespace Inventory
         [Multiline] public string description;
         public int width = 1;
         public int height = 1;
-        public Sprite itemIcon;
+        [FormerlySerializedAs("itemIcon")] public Sprite sprite;
         public int[,] shape = new int[5, 5];
         [SerializeField, TextArea] public string shapeJson;
 

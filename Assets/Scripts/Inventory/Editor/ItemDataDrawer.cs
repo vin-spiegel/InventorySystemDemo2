@@ -40,10 +40,10 @@ namespace Inventory.Editor
 
         private void DrawActiveShape(Rect cellRect, int row, int col, ref bool textureDrew)
         {
-            if (!textureDrew && _itemData.itemIcon)
+            if (!textureDrew && _itemData.sprite)
             {
                 GUI.DrawTexture(new Rect(cellRect.x, cellRect.y, 
-                    _itemData.itemIcon.texture.width, _itemData.itemIcon.texture.height), _itemData.itemIcon.texture);
+                    _itemData.sprite.texture.width, _itemData.sprite.texture.height), _itemData.sprite.texture);
                 textureDrew = true;
             }
 

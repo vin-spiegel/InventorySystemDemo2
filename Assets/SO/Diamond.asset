@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dataId: 16a312a6-bcfe-45db-bab3-e23c47fcb2be
   name: Diamond
-  description: 
+  description: "\uB2E4\uC774\uC544\uBAAC\uB4DC\uB2E4"
   width: 1
   height: 1
-  itemIcon: {fileID: 21300000, guid: 5e951df5b86add34d84814b270f7cb44, type: 3}
-  shapeJson: '[[2,2,2],[2,1,2],[2,2,2]]'
+  sprite: {fileID: 21300000, guid: 5e951df5b86add34d84814b270f7cb44, type: 3}
+  shapeJson: '[[0,2,0],[2,1,2],[0,2,0]]'
