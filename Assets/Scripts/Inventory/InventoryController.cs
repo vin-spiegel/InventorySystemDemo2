@@ -21,7 +21,7 @@ namespace Inventory
             
                 if (value)
                 {
-                    _highlightHandler.SetParent(value);
+                    // _highlightHandler.SetParent(value);
                 
                     if (_selectedItem)
                     {
@@ -41,12 +41,18 @@ namespace Inventory
         [SerializeField] private GameObject highlightPrefab;
 
         private HighlightHandler _highlightHandler;
+        private Camera _mainCamera;
+
+        private void Awake()
+        {
+            _mainCamera = Camera.main;
+        }
 
         private void Start()
         {
             var canvas = GetComponent<Canvas>();
             _scaleFactor = canvas.scaleFactor;
-            _highlightHandler = new HighlightHandler(highlightPrefab);
+            _highlightHandler = new HighlightHandler(new HighlightPool(highlightPrefab));
         }
     
         private void Update()
@@ -170,6 +176,7 @@ namespace Inventory
             if (!_selectedItemGrid)
                 return null;
             
+            // var position = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
             var position = Input.mousePosition;
 
             if (_selectedItem)

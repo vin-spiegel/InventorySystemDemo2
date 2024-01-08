@@ -1,27 +1,11 @@
 using Game.Inventory;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 // ReSharper disable UnassignedField.Global
 
 namespace Inventory
 {
-    public class InventoryItemDataProxy
-    {
-        private readonly ItemData _data;
-
-        internal bool Rotated { get; set; }
-        internal int Height => !Rotated ? _data.height : _data.width;
-        internal int Width => !Rotated ? _data.height : _data.width;
-        internal int X { get; set; }
-        internal int Y { get; set; }
-        internal int[,] Shape => _data.shape;
-
-        public InventoryItemDataProxy(ItemData data)
-        {
-            _data = data;
-        }
-    }
-
     public class InventoryItem : MonoBehaviour
     {
         public ItemData itemData;
@@ -48,11 +32,13 @@ namespace Inventory
             }
         }
 
-        public int onGridPositionX;
-        public int onGridPositionY;
+        public int gridX;
+        public int gridY;
 
         public bool rotated;
-    
+
+        private Vector2 _firstOne;
+
         public void Initialize(ItemData item)
         {
             itemData = item;
@@ -67,13 +53,46 @@ namespace Inventory
                     x = Width * GameConfig.TileSize,
                     y = Height * GameConfig.TileSize
                 };
+
+                _firstOne = FindFirstOne();
             }
+        }
+        
+        private Vector2 FindFirstOne()
+        {
+            for (var x = 0; x < Shape.GetLength(1); x++)
+            {
+                for (var y = 0; y < Shape.GetLength(0); y++)
+                {
+                    if (Shape[y, x] == 1)
+                    {
+                        return new Vector2(x, y);
+                    }
+                }
+            }
+
+            return Vector2.zero;
+        }
+        
+        private int _rotation;
+        
+        public Vector2 CalculatePositionOnGridWithShape(int x, int y)
+        {
+            return new Vector2(
+                (x - _firstOne.x) * GameConfig.TileSize + GameConfig.TileSize / 2.0f, 
+                -((y - _firstOne.y) * GameConfig.TileSize + GameConfig.TileSize / 2.0f));
         }
 
         public void Rotate()
         {
+            _rotation -= 90;
+            if(_rotation <= -360) 
+            {
+                _rotation = 0;
+            }
+            
             rotated = !rotated;
-            transform.rotation = Quaternion.Euler(0, 0, rotated ? 90f : 0f);
+            transform.rotation = Quaternion.Euler(0, 0, _rotation);
         }
     }
 }

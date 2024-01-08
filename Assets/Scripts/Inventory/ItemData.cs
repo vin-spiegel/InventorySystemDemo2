@@ -22,7 +22,8 @@ namespace Inventory
         [FormerlySerializedAs("itemIcon")] public Sprite sprite;
         public int[,] shape = new int[5, 5];
         [SerializeField, TextArea] public string shapeJson;
-
+        
+        
         // todo: 아이템 데이터 캐시 따로 분리해서 만들기
         private static Dictionary<string, ItemData> itemLookupCache;
 

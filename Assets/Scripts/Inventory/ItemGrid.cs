@@ -107,15 +107,6 @@ namespace Inventory
             return item;
         }
 
-        public Vector2 CalculatePositionOnGrid(InventoryItem item, int x, int y)
-        {
-            return new Vector2
-            {
-                x = x * GameConfig.TileSize + GameConfig.TileSize * item.Width / 2.0f,
-                y = -(y * GameConfig.TileSize + GameConfig.TileSize * item.Height / 2.0f),
-            };
-        }
-
         private InventoryItem GetItem(int x, int y)
         {
             return _inventoryContainer.Get(x,y);

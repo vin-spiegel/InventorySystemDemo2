@@ -1,28 +1,21 @@
-﻿using Game.Inventory;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Inventory
 {
     public class HighlightHandler
     {
-        private readonly GameObject _highlightPrefab;
+        private readonly HighlightPool _pool;
         private Vector2Int _oldPosition;
-        private InventoryItem _itemToHighlight;
-        private readonly RectTransform _rt;
 
-        public HighlightHandler(GameObject highlightPrefab)
+        public HighlightHandler(HighlightPool pool)
         {
-            _highlightPrefab = highlightPrefab;
-            _rt = highlightPrefab.transform as RectTransform;
+            _pool = pool;
         }
         
         public void HandleHighlight(Vector2Int? posOnGrid, ItemGrid selectedItemGrid, InventoryItem selectedItem)
         {
             if (!selectedItemGrid || posOnGrid == null)
-            {
-                SetActive(false);
                 return;
-            }
 
             var positionOnGrid = posOnGrid.Value;
             
@@ -31,76 +24,56 @@ namespace Inventory
 
             if (selectedItem)
             {
-                OnSelectedItem(positionOnGrid, selectedItemGrid, selectedItem);
-                // SetActive(selectedItemGrid.BoundaryCheck(
-                //     positionOnGrid.x,
-                //     positionOnGrid.y,
-                //     selectedItem.Width,
-                //     selectedItem.Height));
-                //
-                // SetSize(selectedItem);
-                // SetPosition(selectedItemGrid, selectedItem, positionOnGrid.x, positionOnGrid.y);
+                HighlightItem(selectedItemGrid, selectedItem, positionOnGrid.x, positionOnGrid.y);
+                _oldPosition = positionOnGrid;
             }
             else
             {
-                // _itemToHighlight = selectedItemGrid.GetItem(positionOnGrid);
-                //
-                // if (_itemToHighlight)
-                // {
-                //     SetSize(_itemToHighlight);
-                //     SetPosition(selectedItemGrid, _itemToHighlight);
-                // }
-                //
-                // SetActive(_itemToHighlight);
-            }
-        }
+                var itemToHighlight = selectedItemGrid.GetItem(positionOnGrid);
 
-        private void OnSelectedItem(Vector2Int positionOnGrid, ItemGrid targetGrid, InventoryItem selectedItem)
-        {
-            for (var x = 0; x < selectedItem.Shape.GetLength(0); x++)
-            {
-                for (int y = 0; y < selectedItem.Shape.GetLength(1); y++)
+                if (itemToHighlight)
                 {
-                    var val = selectedItem.Shape[x, y];
-                    if (val == 1)
-                    {
-                        Debug.Log("item");
-                    }
-                    else if (val == 2)
-                    {
-                        Debug.Log("effect");
-                    }
+                    HighlightItem(selectedItemGrid, itemToHighlight, itemToHighlight.gridX, itemToHighlight.gridY);
+                    _oldPosition = positionOnGrid;
+                }
+                else
+                {
+                    _pool.Clear();
                 }
             }
         }
 
-        private void SetActive(bool value)
+        // TODO: BoundaryCheck해서 벗어나면 빨간색으로 표기
+        // Container 만들어서 SetParent로 풀 관리하기. 현재는 그냥 그리드에 다 포함시키는 중
+        private void HighlightItem(ItemGrid targetGrid, InventoryItem item, int gridX, int gridY)
         {
-            _highlightPrefab.gameObject.SetActive(value);
-        }
-
-        private void SetSize(InventoryItem targetItem)
-        {
-            _rt.sizeDelta = new Vector2
+            _pool.Clear();
+            
+            for (var x = 0; x < item.Shape.GetLength(1); x++)
             {
-                x = targetItem.Width * GameConfig.TileSize,
-                y = targetItem.Height * GameConfig.TileSize,
-            };
-        }
-        
-        public void SetParent(ItemGrid targetGrid)
-        {
-            _rt.SetParent(targetGrid.transform);
-        }
-
-        private void SetPosition(ItemGrid targetGrid, InventoryItem targetItem)
-        {
-            _rt.localPosition = targetGrid.CalculatePositionOnGrid(targetItem, targetItem.onGridPositionX, targetItem.onGridPositionY);
-        }
-
-        private void SetPosition(ItemGrid targetGrid, InventoryItem targetItem, int posX, int posY)
-        {
-            _rt.localPosition = targetGrid.CalculatePositionOnGrid(targetItem, posX, posY);
+                for (var y = 0; y < item.Shape.GetLength(0); y++)
+                {
+                    var val = item.Shape[y, x];
+                    
+                    if (val == 0)
+                        continue;
+                    
+                    var highlight = _pool.Get();
+                    highlight.transform.SetParent(targetGrid.transform);
+                    highlight.transform.localPosition = item.CalculatePositionOnGridWithShape(gridX + x, gridY + y);
+                    
+                    var image = _pool.GetHighlightImage(highlight);
+                    if (val == 1)
+                    {
+                        image.color = new Color(1f, 1f, 1f, 0.5f);
+                    }
+                    else if (val == 2)
+                    {
+                        image.color = new Color(1f, 0.9f, 0.1f, 0.5f);
+                    }
+                }
+            }
+            
         }
     }
 }

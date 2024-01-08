@@ -27,16 +27,19 @@ namespace Inventory
                 }
             }
             
-            item.onGridPositionX = x;
-            item.onGridPositionY = y;
+            item.gridX = x;
+            item.gridY = y;
             
-            Debug.Log($"<color=cyan>Item {item.name}</color> Placed At <color=cyan>({x}, {y})</color>");
+            // Debug.Log($"<color=cyan>Item {item.name}</color> Placed At <color=cyan>({x}, {y})</color>");
 
             return true;
         }
 
         public InventoryItem Get(int x, int y)
         {
+            if (x < 0 || x >= _inventoryItems.GetLength(0) || y < 0 || y >= _inventoryItems.GetLength(1))
+                return null;
+            
             return _inventoryItems[x, y];
         }
 
@@ -63,8 +66,8 @@ namespace Inventory
             {
                 for (var iy = 0; iy < item.Height; iy++)
                 {
-                    var removeX = item.onGridPositionX + ix;
-                    var removeY = item.onGridPositionY + iy;
+                    var removeX = item.gridX + ix;
+                    var removeY = item.gridY + iy;
                     _inventoryItems[removeX, removeY] = null;
                 }
             }

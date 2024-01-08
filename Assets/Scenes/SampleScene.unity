@@ -135,12 +135,12 @@ GameObject:
   - component: {fileID: 37417580}
   - component: {fileID: 37417579}
   m_Layer: 5
-  m_Name: Highlighter
+  m_Name: Highlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &37417578
 RectTransform:
   m_ObjectHideFlags: 0
@@ -346,7 +346,7 @@ GameObject:
   - component: {fileID: 775402037}
   - component: {fileID: 775402036}
   m_Layer: 5
-  m_Name: Grid1 (1)
+  m_Name: Grid2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -369,7 +369,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 360.1, y: -22.7}
+  m_AnchoredPosition: {x: 450, y: -22.7}
   m_SizeDelta: {x: 320, y: 320}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &775402036
