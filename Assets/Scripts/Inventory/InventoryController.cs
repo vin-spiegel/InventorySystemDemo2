@@ -57,32 +57,32 @@ namespace Inventory
     
         private void Update()
         {
-            if (_selectedItem)
-            {
-                _selectedItem.transform.position = Input.mousePosition;
-            }
-        
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                CreateRandomItem();
-            }
+            // if (_selectedItem)
+            // {
+            //     _selectedItem.transform.position = Input.mousePosition;
+            // }
+            //
+            // if (Input.GetKeyDown(KeyCode.Q))
+            // {
+            //     CreateRandomItem();
+            // }
 
             if (Input.GetKeyDown(KeyCode.W))
             {
                 InsertRandomItem();
             }
 
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                RotateSelectItem();
-            }
-
-            _highlightHandler.HandleHighlight(GetTileGridPosition(), _selectedItemGrid, _selectedItem);
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                LeftMouseButtonPressed();
-            }
+            // if (Input.GetKeyDown(KeyCode.R))
+            // {
+            //     RotateSelectItem();
+            // }
+            //
+            // _highlightHandler.HandleHighlight(GetTileGridPosition(), _selectedItemGrid, _selectedItem);
+            //
+            // if (Input.GetMouseButtonDown(0))
+            // {
+            //     LeftMouseButtonPressed();
+            // }
         }
 
         private void RotateSelectItem()
