@@ -3,6 +3,7 @@ using Game.Inventory;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using VContainer;
 
 // ReSharper disable Unity.InefficientPropertyAccess
 
@@ -47,7 +48,7 @@ namespace Inventory
         {
             _mainCamera = Camera.main;
         }
-
+        
         private void Start()
         {
             var canvas = GetComponent<Canvas>();
@@ -110,6 +111,18 @@ namespace Inventory
             item.transform.SetParent(_selectedItemGrid.transform);
             item.transform.SetAsLastSibling();
             item.transform.localScale = Vector3.one;
+
+            var dragItem = item.GetComponent<InventoryDragItem>();
+            dragItem.OnBeginDragEvent += data =>
+            {
+                _selectedItem = item;
+            };
+            dragItem.OnEndDragEvent += data =>
+            {
+                var pos = GetTileGridPosition(data.position);
+                ProcessGridAction(pos);
+            };
+            
             return item;
         }
 
@@ -139,14 +152,8 @@ namespace Inventory
             }
         }
 
-        private void LeftMouseButtonPressed()
+        private void ProcessGridAction(Vector2Int pos)
         {
-            var vec = GetTileGridPosition();
-            if (vec == null)
-                return;
-            
-            var pos = vec.Value;
-
             if (!_selectedItem)
             {
                 if (_selectedItemGrid.PickUpItem(pos.x, pos.y, out var item))
@@ -171,6 +178,15 @@ namespace Inventory
             }
         }
 
+        private void LeftMouseButtonPressed()
+        {
+            var vec = GetTileGridPosition();
+            if (vec == null)
+                return;
+            
+            ProcessGridAction(vec.Value);
+        }
+
         private Vector2Int? GetTileGridPosition()
         {
             if (!_selectedItemGrid)
@@ -179,17 +195,17 @@ namespace Inventory
             // var position = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
             var position = Input.mousePosition;
 
-            if (_selectedItem)
-            {
-                position.x -= (_selectedItem.Width - 1) * GameConfig.TileSize / 2.0f;
-                position.y += (_selectedItem.Height - 1) * GameConfig.TileSize / 2.0f;
-            }
-
             return GetTileGridPosition(position);
         }
 
-        private Vector2Int GetTileGridPosition(Vector2 mousePosition)
+        public Vector2Int GetTileGridPosition(Vector2 mousePosition)
         {
+            if (_selectedItem)
+            {
+                mousePosition.x -= (_selectedItem.Width - 1) * GameConfig.TileSize / 2.0f;
+                mousePosition.y += (_selectedItem.Height - 1) * GameConfig.TileSize / 2.0f;
+            }
+            
             var position = _selectedItemGrid.transform.position;
 
             return new Vector2Int(

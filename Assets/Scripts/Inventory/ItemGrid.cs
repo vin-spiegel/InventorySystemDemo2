@@ -50,7 +50,7 @@ namespace Inventory
                 x = posX * GameConfig.TileSize + GameConfig.TileSize * inventoryItem.Width / 2.0f,
                 y = -(posY * GameConfig.TileSize + GameConfig.TileSize * inventoryItem.Height / 2.0f),
             };
-
+            
             return true;
         }
 

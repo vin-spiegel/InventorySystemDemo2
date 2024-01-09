@@ -1,32 +1,34 @@
-﻿using Inventory;
+﻿using System;
+using Inventory;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using VContainer;
 
 namespace Components.Dragging
 {
     public class DragItem<T> : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        private Canvas _canvas;
-
-        private void Awake()
-        {
-            Debug.Log("DragItem Awake");
-            // _canvas = GetComponentInParent<Canvas>();
-        }
+        public event Action<PointerEventData> OnEndDragEvent;
+        public event Action<PointerEventData> OnDragEvent;
+        public event Action<PointerEventData> OnBeginDragEvent;
+        
+        private Vector2 _startPosition;
         
         void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
         {
-            Debug.Log("OnBeginDrag");
+            _startPosition = transform.position;
+            OnBeginDragEvent?.Invoke(eventData);
         }
 
         void IDragHandler.OnDrag(PointerEventData eventData)
         {
-            Debug.Log("OnDrag");
+            transform.position = eventData.position;
+            OnDragEvent?.Invoke(eventData);
         }
 
         void IEndDragHandler.OnEndDrag(PointerEventData eventData)
         {
-            Debug.Log("OnEndDrag");
+            OnEndDragEvent?.Invoke(eventData);
         }
     }
 }
