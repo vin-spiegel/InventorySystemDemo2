@@ -29,8 +29,6 @@ namespace Inventory
             
             item.gridX = x;
             item.gridY = y;
-            
-            // Debug.Log($"<color=cyan>Item {item.name}</color> Placed At <color=cyan>({x}, {y})</color>");
 
             return true;
         }
@@ -106,7 +104,6 @@ namespace Inventory
                     var item = _inventoryItems[posX + x, posY + y];
                     if (item)
                     {
-                        Debug.Log($"Grid position X:{posX + x}, Y:{posY + y} is occupied by item {item.itemData.name}.");
                         return false;
                     }
                 }
